@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no,email=no,address=no,date=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <meta name="x5-video-player-type" content="h5-page">
+    <meta name="x5-video-player-fullscreen" content="true">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="renderer" content="webkit">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="360-fullscreen" content="true">
+    <title>特发地产产业项目介绍</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+        :root {
+            --primary: #0066CC;
+            --primary-dark: #0052A3;
+            --primary-light: #1E88E5;
+            --secondary: #0099FF;
+            --gold: #F5A623;
+            --bg-light: #FAFBFC;
+            --bg-white: #FFFFFF;
+            --text-dark: #1A202C;
+            --text-gray: #5A6672;
+            --text-light: #8E99A4;
+            --border: #E8EEF3;
+            --shadow-card: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-video: 0 4px 24px rgba(0,0,0,0.15);
+            --radius-card: 12px;
+            --radius-video: 16px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-top: env(safe-area-inset-top, 0px);
+        }
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            touch-action: manipulation;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "Segoe UI", sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
+        }
+        ::selection { background: var(--primary); color: #fff; }
+
+        .logo-header {
+            text-align: center;
+            padding: 20px 16px 14px;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo-header .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            margin: 0 auto 8px;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        .logo-header h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+        }
+        .logo-header .tagline {
+            font-size: 0.68rem;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .nav-tabs {
+            background: var(--bg-white);
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            text-align: center;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .nav-tab {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 72px;
+            padding: 9px 18px;
+            margin: 0 4px;
+            background: var(--bg-light);
+            color: var(--text-gray);
+            border: 1px solid transparent;
+            border-radius: 22px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(0,102,204,0.12);
+            white-space: nowrap;
+        }
+        .nav-tab:active { transform: scale(0.96); }
+        .nav-tab.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,102,204,0.25);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        .project-content {
+            display: none;
+            padding-top: 16px;
+        }
+        .project-content.active {
+            display: block;
+        }
+
+        .video-section {
+            background: var(--bg-white);
+            border-radius: var(--radius-video);
+            overflow: hidden;
+            box-shadow: var(--shadow-video);
+        }
+        .video-wrap {
+            position: relative;
+            width: 100%;
+            background: #000;
+            aspect-ratio: 16 / 9;
+            max-height: 60vh;
+            min-height: 200px;
+        }
+        .video-wrap video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+            outline: none;
+        }
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.35);
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+        .play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .play-btn {
+            width: 64px;
+            height: 64px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .play-btn:active { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,0,0,0.4); }
+        .play-btn svg { width: 24px; height: 24px; margin-left: 2px; }
+
+        .video-info {
+            padding: 14px 16px;
+        }
+        .video-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .video-meta {
+            font-size: 0.78rem;
+            color: var(--text-gray);
+        }
+
+        .section {
+            margin-top: 16px;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .section-title .title-line {
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .section-title h2 {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+        }
+
+        .description-text {
+            background: var(--bg-white);
+            border-radius: var(--radius-card);
+            padding: 18px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-card);
+        }
+        .intro-block {
+            margin-bottom: 14px;
+        }
+        .intro-block:last-child { margin-bottom: 0; }
+        .intro-block h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.3px;
+        }
+        .intro-block p {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            line-height: 1.78;
+            text-align: justify;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        footer {
+            background: var(--bg-white);
+            border-top: 1px solid var(--border);
+            padding: 18px 16px;
+            padding-bottom: calc(18px + var(--safe-bottom));
+            margin-top: 24px;
+            text-align: center;
+        }
+        footer .footer-logo {
+            height: 28px;
+            width: auto;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            -webkit-user-drag: none;
+        }
+        footer .footer-text {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+        footer .footer-copyright {
+            font-size: 0.66rem;
+            color: var(--text-light);
+            opacity: 0.65;
+        }
+
+        @media (max-width: 374px) {
+            .play-btn { width: 54px; height: 54px; }
+            .play-btn svg { width: 20px; height: 20px; }
+            .logo-header .logo-img { height: 32px; }
+            .logo-header h1 { font-size: 0.9rem; }
+            .nav-tab { padding: 7px 14px; font-size: 0.74rem; min-width: 60px; }
+            .video-wrap { min-height: 160px; }
+        }
+        @media (min-width: 420px) {
+            .nav-tab { padding: 10px 22px; font-size: 0.84rem; }
+            .logo-header .logo-img { height: 44px; }
+        }
+        @media (min-width: 640px) {
+            .logo-header { padding: 24px 24px 16px; }
+            .logo-header .logo-img { height: 48px; }
+            .video-section { margin: 0 8px; }
+            .video-info { padding: 20px; }
+        }
+        @media (min-width: 1024px) {
+            .video-wrap { max-height: 480px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-header">
+        <img src="logo.png" alt="特发地产" class="logo-img">
+        <h1>特发地产产业项目介绍</h1>
+        <p class="tagline">携手共进 · 共创未来</p>
+    </div>
+
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-project="0">鹅公岭项目</button>
+        <button class="nav-tab" data-project="1">田心项目</button>
+        <button class="nav-tab" data-project="2">坪地北项目</button>
+    </nav>
+
+    <main class="container">
+        <div class="project-content active" id="project-content-0">
+            <div class="video-section">
+                <div class="video-wrap">
+                    <video id="video-0" controls playsinline webkit-playsinline x5-video-player-type="h5" x5-video-orientation="portrait" x5-playsinline>
+                        <source src="鹅公岭项目/鹅公岭项目_h264.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay" id="overlay-0">
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="2.5">
+                                <path d="M7 4.5v15l12-7.5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">鹅公岭产业升级项目</div>
+                    <div class="video-meta">2026年</div>
+                </div>
+            </div>
+
+            <section class="section">
+                <div class="section-title">
+                    <div class="title-line"></div>
+                    <h2>项目介绍</h2>
+                </div>
+                <div class="description-text">
+                    <div class="intro-block">
+                        <h3>区位交通与产业站位</h3>
+                        <p>项目坐落于龙岗区平湖街道鹅公岭社区，西临东深公路，依托机荷高速、丹平快速等高快速路，可便捷通达深圳中心城区。地处深圳"20+8"龙岗西部先进制造业园区，位列龙岗国土空间"一芯两核多支点"信息数字核，主导发展ICT、半导体、通用电子元器件产业；紧邻平湖北罗山科技园，直线距离约6公里，鹏芯微、新凯来等头部半导体企业已落地投产，产业集聚优势突出。</p>
+                    </div>
+                    <div class="intro-block">
+                        <h3>用地规模与规划弹性</h3>
+                        <p>项目总产业用地约360亩，其中移交政府产业用地247亩、周边市政道路44亩，集中连片产业空间可达291亩。移交政府产业用地容积率暂未明确，可由企业联合产业及规划主管部门结合产业实际核定，且产业用地布局可按生产需求向政府申请优化调整，利于打造连片规模化产业载体。</p>
+                    </div>
+                    <div class="intro-block">
+                        <h3>留用地指标与建筑管控</h3>
+                        <p>项目留用产业用地约114.1亩，规划产业总容积约37.23万㎡，其中可售面积17.09万㎡、不可售面积20.14万㎡；不可售面积包含政府创新型产业用房、村集体及小业主回迁安置面积。地块平均容积率5.0，普通工业用地限高70米，建筑以10–15层厂房及宿舍为主；新型产业用地限高150米，规划25–30层产业用房、15–20层配套宿舍，高低分区适配产业分层发展需求。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="project-content" id="project-content-1">
+            <div class="video-section">
+                <div class="video-wrap">
+                    <video id="video-1" controls playsinline webkit-playsinline x5-video-player-type="h5" x5-video-orientation="portrait" x5-playsinline>
+                        <source src="田心项目/田心项目视频_h264.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay" id="overlay-1">
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="2.5">
+                                <path d="M7 4.5v15l12-7.5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">田心产业升级项目</div>
+                    <div class="video-meta">2026年</div>
+                </div>
+            </div>
+
+            <section class="section">
+                <div class="section-title">
+                    <div class="title-line"></div>
+                    <h2>项目介绍</h2>
+                </div>
+                <div class="description-text">
+                    <div class="intro-block">
+                        <h3>区位交通与产业定位</h3>
+                        <p>项目地处坪山区石井街道东部田心社区，临近外环高速、南坪快速及金田路、兰田路等城市主干道，紧邻地铁16号线田心站，立体交通便捷通达。归属深圳"20+8"坪山高新南先进制造业园区，重点发展高端装备与仪器、细胞与基因、创新医药主导产业，产业发展基础雄厚。</p>
+                    </div>
+                    <div class="intro-block">
+                        <h3>周边产业集聚与规划调整</h3>
+                        <p>项目产业配套氛围浓厚，东侧布局全国首个无人驾驶交通测试平台智能网联汽车项目，西侧毗邻技术大学，北侧约4.5公里可达坪山生物医药创新产业园。项目范围内移交政府用地以生态、道路等公益性用地为主；片区拟将留用地东侧原环境园设施用地，调整为产业及仓储物流用地，调整规模约855亩，其中本项目范围内占15.7公顷，后续用地功能仍具备灵活调整空间。</p>
+                    </div>
+                    <div class="intro-block">
+                        <h3>留用指标与建筑规划</h3>
+                        <p>项目留用产业用地约119亩，规划产业总建面约40.16万㎡，全部用作回迁物业，涵盖厂房、配套宿舍及商业配套。留用地平均容积率4.2，建筑高度按70米管控，厂房与配套宿舍规划以10—15层为主，适配高端制造及生物医药类产业落地建设需求。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="project-content" id="project-content-2">
+            <div class="video-section">
+                <div class="video-wrap">
+                    <video id="video-2" controls playsinline webkit-playsinline x5-video-player-type="h5" x5-video-orientation="portrait" x5-playsinline>
+                        <source src="坪地北项目/坪地北项目_h264.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay" id="overlay-2">
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#0066CC" stroke-width="2.5">
+                                <path d="M7 4.5v15l12-7.5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">坪地北产业升级项目</div>
+                    <div class="video-meta">2026年</div>
+                </div>
+            </div>
+
+            <section class="section">
+                <div class="section-title">
+                    <div class="title-line"></div>
+                    <h2>项目介绍</h2>
+                </div>
+                <div class="description-text">
+                    <div class="intro-block">
+                        <h3>区位交通与板块能级</h3>
+                        <p>项目坐落于龙岗区坪地街道六联社区，紧邻深惠边界，南接外环高速、处于长深高速东西两侧，交通区位优越。地处国际低碳城辐射范围，距低碳城启动区约4公里；纳入深圳"20+8"龙岗西部先进制造业园区，位列龙岗"一芯两核多支点"重要片区，同时属于全市33个较大面积产业整备片区之一，产业发展基底扎实。</p>
+                    </div>
+                    <div class="intro-block">
+                        <h3>周边配套与用地规模</h3>
+                        <p>项目西侧紧邻占地约1988亩的深圳市职教园，总建面约180万㎡、可容纳4.1万名学生，一期已全面施工，预计2027年9月投用，人才与生活配套优势显著。项目范围内总产业用地约717亩，其中移交政府产业用地约401亩；范围外政府规划可释放产业用地约922亩，整体可统筹产业空间规模充裕。</p>
+                    </div>
+                    <div class="intro-block">
+                        <h3>规划指标与回迁布局</h3>
+                        <p>移交政府产业用地容积率暂未核定，可由企业联合产业、规划主管部门结合落地产业实际另行确定。项目留用产业用地约320亩，规划产业总容积约94.01万㎡，全部规划为回迁物业，涵盖厂房、宿舍、商业及公共配套；其中村集体回迁约58万㎡、小业主回迁约36万㎡。留用地平均容积率4.52，建筑限高70米，厂房及配套宿舍以10—15层为主，规划形态规整适配产业落地需求。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <img src="logo.png" alt="特发地产" class="footer-logo">
+        <p class="footer-text">特发地产 · 产业项目介绍</p>
+        <p class="footer-copyright">Copyright &copy; 2026 SDRE. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        var tabs = document.querySelectorAll('.nav-tab');
+        var contents = document.querySelectorAll('.project-content');
+        var videos = document.querySelectorAll('video');
+        var overlays = document.querySelectorAll('.play-overlay');
+
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var projectId = parseInt(this.dataset.project);
+                tabs.forEach(function(t) { t.classList.remove('active'); });
+                contents.forEach(function(c) { c.classList.remove('active'); });
+                videos.forEach(function(v) { v.pause(); });
+                overlays.forEach(function(o) { o.classList.remove('hidden'); });
+                this.classList.add('active');
+                contents[projectId].classList.add('active');
+            });
+        });
+
+        function playVideo(id) {
+            var video = document.getElementById('video-' + id);
+            var overlay = document.getElementById('overlay-' + id);
+            if (video) {
+                video.play();
+                overlay.classList.add('hidden');
+            }
+        }
+
+        overlays.forEach(function(overlay, id) {
+            overlay.addEventListener('click', function() {
+                playVideo(id);
+            });
+        });
+
+        videos.forEach(function(video) {
+            video.addEventListener('pause', function() {
+                var id = this.id.replace('video-', '');
+                document.getElementById('overlay-' + id).classList.remove('hidden');
+            });
+            video.addEventListener('ended', function() {
+                var id = this.id.replace('video-', '');
+                document.getElementById('overlay-' + id).classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
